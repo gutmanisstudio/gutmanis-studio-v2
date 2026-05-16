@@ -1,100 +1,142 @@
 'use client'
 import { motion } from 'framer-motion'
-import { useLang } from '@/lib/useLang'
-import { t } from '@/lib/i18n'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import AboutSnippet from '@/components/AboutSnippet'
+import { projects } from '@/lib/projects'
+
+const showcaseSlugs = ['bouquets-by-liz', 'table7', 'sevarch']
+const showcase = showcaseSlugs
+  .map(slug => projects.find(p => p.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p))
 
 export default function AboutPage() {
-  const { lang } = useLang()
-
   return (
     <>
       <Navbar />
 
-      <main style={{ paddingTop: '64px', minHeight: '100vh' }}>
+      <main style={{ paddingTop: '92px', minHeight: '100vh' }}>
+        <AboutSnippet />
 
-        {/* Photo */}
-        <div style={{ position: 'relative', height: '580px', overflow: 'hidden' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/roberts.jpg"
-            alt="Roberts Gutmanis"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', display: 'block', filter: 'brightness(0.92)' }}
-          />
+        {/* Project showcase — browser-window mockups */}
+        <section style={{
+          maxWidth: '760px', margin: '0 auto',
+          padding: '20px 1.5rem 6rem',
+        }}>
           <div style={{
-            position: 'absolute', bottom: '24px', right: '24px',
-            background: 'rgba(8,8,8,0.85)', border: '1px solid rgba(255,255,255,0.12)',
-            backdropFilter: 'blur(12px)', padding: '14px 20px', textAlign: 'right',
+            display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+            marginBottom: '2rem',
           }}>
-            <div style={{ fontFamily: 'var(--font-heading), sans-serif', fontSize: '1.6rem', color: '#fff', lineHeight: 1 }}>21</div>
-            <div style={{ fontFamily: 'var(--font-body), sans-serif', fontSize: '0.5rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', marginTop: '3px' }}>
-              {t.about.tag1[lang]}
-            </div>
+            <p style={{
+              fontFamily: 'var(--font-ui), sans-serif', fontSize: '12px', fontWeight: 500,
+              letterSpacing: '0.5em', textTransform: 'uppercase', color: 'var(--ink-faint)',
+              paddingLeft: '0.5em', margin: 0,
+            }}>Recent Work</p>
+            <a href="/work" style={{
+              fontFamily: 'var(--font-italic), serif', fontStyle: 'italic',
+              fontSize: '1.1rem', color: 'var(--crimson)',
+              textDecoration: 'none',
+            }}>view all →</a>
           </div>
-        </div>
 
-        {/* Content */}
-        <section style={{ padding: '100px 60px', maxWidth: '1280px', margin: '0 auto' }}>
-          <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '96px', alignItems: 'center' }}>
+          <div className="about-showcase" style={{
+            display: 'flex', flexDirection: 'column', gap: '2.5rem',
+          }}>
+            {showcase.map((p, i) => (
+              <motion.a
+                key={p.slug}
+                href={p.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                whileHover={{ y: -4 }}
+                style={{
+                  display: 'block',
+                  borderRadius: '14px',
+                  overflow: 'hidden',
+                  border: '1px solid var(--line-strong)',
+                  background: '#161618',
+                  boxShadow: '0 30px 80px -30px rgba(0,0,0,0.6), 0 8px 24px -8px rgba(0,0,0,0.4)',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+              >
+                {/* Title bar with traffic lights */}
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: '8px',
+                  padding: '12px 16px',
+                  background: 'linear-gradient(180deg, #2a2a2c, #1d1d1f)',
+                  borderBottom: '1px solid rgba(0,0,0,0.5)',
+                }}>
+                  <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ff5f57' }} />
+                  <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#febc2e' }} />
+                  <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#28c840' }} />
+                  <span style={{
+                    flex: 1, textAlign: 'center',
+                    fontFamily: 'var(--font-ui), sans-serif',
+                    fontSize: '13px', fontWeight: 500,
+                    color: 'rgba(255,255,255,0.7)',
+                    letterSpacing: '0.01em',
+                    marginLeft: '-50px',
+                  }}>{p.title}</span>
+                </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              <p style={{ fontFamily: 'var(--font-body), sans-serif', fontSize: '0.58rem', letterSpacing: '0.35em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ width: '28px', height: '1px', background: 'rgba(255,255,255,0.3)', display: 'inline-block' }} />
-                {t.about.eyebrow[lang]}
-              </p>
-              <h2 style={{ fontFamily: 'var(--font-heading), sans-serif', fontSize: 'clamp(2.2rem, 4vw, 3.8rem)', fontWeight: 300, color: '#fff', lineHeight: 1.08, letterSpacing: '-0.02em' }}>
-                Roberts Gutmanis
-              </h2>
-            </motion.div>
+                {/* Preview image */}
+                <div style={{
+                  position: 'relative',
+                  aspectRatio: '16 / 9',
+                  background: '#08050a',
+                  overflow: 'hidden',
+                }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.image}
+                    alt={`${p.title} preview`}
+                    loading="lazy"
+                    decoding="async"
+                    style={{
+                      width: '100%', height: '100%',
+                      objectFit: 'cover', objectPosition: 'top center',
+                      display: 'block',
+                    }}
+                  />
+                </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-            >
-              <p style={{ fontFamily: 'var(--font-body), sans-serif', fontSize: '0.88rem', lineHeight: 1.9, color: 'rgba(255,255,255,0.45)', marginBottom: '16px' }}>
-                {t.about.p1[lang]}
-              </p>
-              <p style={{ fontFamily: 'var(--font-body), sans-serif', fontSize: '0.88rem', lineHeight: 1.9, color: 'rgba(255,255,255,0.45)', marginBottom: '16px' }}>
-                {t.about.p2[lang]}
-              </p>
-              <p style={{ fontFamily: 'var(--font-body), sans-serif', fontSize: '0.88rem', lineHeight: 1.9, color: 'rgba(255,255,255,0.45)', marginBottom: '28px' }}>
-                {t.about.p3[lang]}
-              </p>
-
-              {/* Tags */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {['Next.js', 'Tailwind CSS', 'Framer Motion', 'React', 'TypeScript', t.about.tag1[lang], t.about.tag2[lang]].map(tag => (
-                  <span key={tag} style={{
-                    fontFamily: 'var(--font-body), sans-serif', fontSize: '0.58rem',
-                    letterSpacing: '0.12em', textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.07)',
-                    padding: '7px 14px', transition: 'all 0.2s', cursor: 'default',
-                  }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = 'rgba(255,255,255,0.2)' }}
-                  >{tag}</span>
-                ))}
-              </div>
-            </motion.div>
+                {/* Caption row */}
+                <div style={{
+                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  padding: '14px 18px',
+                  background: '#0f0f10',
+                  borderTop: '1px solid rgba(255,255,255,0.04)',
+                }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    <span style={{
+                      fontFamily: 'var(--font-ui), sans-serif',
+                      fontSize: '0.95rem', fontWeight: 600, color: 'var(--ink)',
+                      letterSpacing: '-0.005em',
+                    }}>{p.title}</span>
+                    <span style={{
+                      fontFamily: 'var(--font-ui), sans-serif',
+                      fontSize: '0.68rem', fontWeight: 500,
+                      letterSpacing: '0.16em', textTransform: 'uppercase',
+                      color: 'var(--ink-faint)',
+                    }}>{p.category}</span>
+                  </div>
+                  <span style={{
+                    fontFamily: 'var(--font-italic), serif', fontStyle: 'italic',
+                    fontSize: '0.95rem', color: 'var(--crimson)',
+                  }}>visit →</span>
+                </div>
+              </motion.a>
+            ))}
           </div>
         </section>
       </main>
 
       <Footer />
-
-      <style>{`
-        @media (max-width: 960px) {
-          .about-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
-        }
-        @media (max-width: 600px) {
-          main section { padding: 48px 14px !important; }
-          main > div:first-child { height: 360px !important; }
-        }
-      `}</style>
     </>
   )
 }

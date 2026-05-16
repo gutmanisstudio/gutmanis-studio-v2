@@ -17,7 +17,7 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <section style={{ borderTop: '1px solid rgba(255,255,255,0.07)', borderBottom: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.015)' }}>
+    <section style={{ borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', background: 'rgba(255,255,255,0.015)' }}>
       <div style={{ maxWidth: '860px', margin: '0 auto', padding: '100px 60px' }} className="faq-container">
 
         {/* Header */}
@@ -27,16 +27,16 @@ export default function FAQ() {
           style={{ textAlign: 'center', marginBottom: '52px' }}
         >
           <p style={{
-            fontFamily: 'var(--font-body), sans-serif', fontSize: '0.58rem',
-            letterSpacing: '0.35em', textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.3)', marginBottom: '16px',
+            fontFamily: 'var(--font-ui), sans-serif', fontSize: '12px', fontWeight: 500,
+            letterSpacing: '0.5em', textTransform: 'uppercase',
+            color: 'var(--ink-faint)', marginBottom: '16px', paddingLeft: '0.5em',
           }}>
             {t.faq.eyebrow[lang]}
           </p>
           <h2 style={{
-            fontFamily: 'var(--font-heading), sans-serif',
-            fontSize: 'clamp(2.2rem, 4vw, 3.8rem)', fontWeight: 300,
-            color: '#fff', lineHeight: 1.08, letterSpacing: '-0.02em',
+            fontFamily: 'var(--font-ui), sans-serif',
+            fontSize: 'clamp(2.2rem, 4vw, 3.8rem)', fontWeight: 700,
+            color: 'var(--ink)', lineHeight: 1.08, letterSpacing: '-0.02em',
           }}>
             FAQ
           </h2>
@@ -53,23 +53,23 @@ export default function FAQ() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                style={{ borderBottom: i < faqKeys.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none' }}
+                style={{ borderBottom: i < faqKeys.length - 1 ? '1px solid var(--line)' : 'none' }}
               >
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
                   style={{
                     width: '100%', textAlign: 'left', background: 'none', border: 'none',
                     padding: '24px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                    cursor: 'pointer', fontFamily: 'var(--font-body), sans-serif',
-                    fontSize: '0.92rem', color: '#fff', fontWeight: 300,
-                    transition: 'color 0.2s', letterSpacing: '0.02em', gap: '20px',
+                    cursor: 'pointer', fontFamily: 'var(--font-ui), sans-serif',
+                    fontSize: '0.95rem', color: 'var(--ink)', fontWeight: 500,
+                    transition: 'color 0.2s', letterSpacing: '-0.005em', gap: '20px',
                   }}
-                  onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}
-                  onMouseLeave={e => e.currentTarget.style.color = '#fff'}
+                  onMouseEnter={e => e.currentTarget.style.color = 'var(--ink-mute)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'var(--ink)'}
                 >
                   {t.faq[fk.q][lang]}
                   <span style={{
-                    color: 'rgba(255,255,255,0.4)', fontSize: '1.2rem',
+                    color: 'var(--crimson)', fontSize: '1.2rem',
                     transition: 'transform 0.3s', flexShrink: 0, width: '20px', textAlign: 'center',
                     transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
                   }}>+</span>
@@ -81,8 +81,8 @@ export default function FAQ() {
                   paddingBottom: isOpen ? '22px' : '0',
                 }}>
                   <p style={{
-                    fontFamily: 'var(--font-body), sans-serif', fontSize: '0.85rem',
-                    color: 'rgba(255,255,255,0.45)', lineHeight: 1.88, maxWidth: '680px',
+                    fontFamily: 'var(--font-ui), sans-serif', fontSize: '0.88rem',
+                    color: 'var(--ink-mute)', lineHeight: 1.75, maxWidth: '680px',
                   }}>
                     {t.faq[fk.a][lang]}
                   </p>

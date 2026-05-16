@@ -40,8 +40,32 @@ export default function ContactPage() {
     <>
       <Navbar />
 
-      <main style={{ paddingTop: '64px', background: 'transparent', minHeight: '100vh' }}>
-        <section style={{ padding: '6rem 2.5rem', maxWidth: '1100px', margin: '0 auto' }}>
+      <main style={{ paddingTop: '64px', background: 'transparent', minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
+        {/* Full-bleed background art */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/blog.jpg"
+          alt=""
+          aria-hidden
+          fetchPriority="high"
+          decoding="async"
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: 'center',
+            zIndex: 0,
+            opacity: 0.9,
+          }}
+        />
+        {/* Darken / vignette for legibility */}
+        <div aria-hidden style={{
+          position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
+          background: [
+            'linear-gradient(180deg, rgba(8,5,10,0.55) 0%, rgba(8,5,10,0.35) 40%, rgba(8,5,10,0.7) 100%)',
+            'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(8,5,10,0.35) 100%)',
+          ].join(', '),
+        }} />
+
+        <section style={{ padding: '6rem 2.5rem', maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
           <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '96px', alignItems: 'start' }}>
 
             {/* ── LEFT — Info ── */}
@@ -95,12 +119,12 @@ export default function ContactPage() {
               <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
                   <label style={fl}>{t.contact.name[lang]}</label>
-                  <input className="fi" type="text" name="name" placeholder="Full name" required style={fi('name')}
+                  <input className="fi" type="text" name="name" placeholder={t.contact.namePh[lang]} required style={fi('name')}
                     onFocus={() => setFocused('name')} onBlur={() => setFocused('')} />
                 </div>
                 <div>
                   <label style={fl}>{t.contact.email[lang]}</label>
-                  <input className="fi" type="email" name="email" placeholder="your@email.com" required style={fi('email')}
+                  <input className="fi" type="email" name="email" placeholder={t.contact.emailPh[lang]} required style={fi('email')}
                     onFocus={() => setFocused('email')} onBlur={() => setFocused('')} />
                 </div>
               </div>
@@ -139,6 +163,32 @@ export default function ContactPage() {
                   style={{ ...fi('msg'), resize: 'none', height: '110px' }}
                   onFocus={() => setFocused('msg')} onBlur={() => setFocused('')} />
               </div>
+
+              {/* Consent */}
+              <label style={{
+                display: 'flex', alignItems: 'flex-start', gap: '10px',
+                marginTop: '6px', cursor: 'pointer',
+                fontFamily: 'var(--font-body), sans-serif', fontSize: '0.75rem',
+                color: 'rgba(255,255,255,0.55)', lineHeight: 1.6,
+              }}>
+                <input
+                  type="checkbox"
+                  name="consent"
+                  required
+                  style={{
+                    marginTop: '3px', width: '14px', height: '14px',
+                    accentColor: 'var(--crimson)', flexShrink: 0, cursor: 'pointer',
+                  }}
+                />
+                <span>
+                  {t.contact.consent[lang]}{' '}
+                  <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{
+                    color: 'rgba(255,255,255,0.85)', textDecoration: 'underline',
+                    textUnderlineOffset: '3px',
+                  }}>{t.contact.consentLink[lang]}</a>
+                  {t.contact.consentSuffix[lang]}
+                </span>
+              </label>
 
               {/* Submit */}
               <NeonButton type="submit" fullWidth style={{ padding: '15px', marginTop: '4px' }}>

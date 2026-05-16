@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useEffect } from 'react'
 
 interface TiltCardProps {
   tiltLimit?: number
@@ -26,27 +26,42 @@ export function TiltCard({
   )
   const [spotlightPos, setSpotlightPos] = useState({ x: 50, y: 50 })
   const [isHovered, setIsHovered] = useState(false)
+  const rafRef = useRef<number | null>(null)
+  const pendingRef = useRef<{ px: number; py: number } | null>(null)
 
   const dir = effect === 'evade' ? -1 : 1
+
+  useEffect(() => () => { if (rafRef.current != null) cancelAnimationFrame(rafRef.current) }, [])
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
       const el = cardRef.current
       if (!el) return
       const rect = el.getBoundingClientRect()
-      const px = (e.clientX - rect.left) / rect.width
-      const py = (e.clientY - rect.top) / rect.height
-      const xRot = (py - 0.5) * (tiltLimit * 2) * dir
-      const yRot = (px - 0.5) * -(tiltLimit * 2) * dir
-      setTransform(
-        `perspective(${perspective}px) rotateX(${xRot}deg) rotateY(${yRot}deg) scale3d(${scale}, ${scale}, ${scale})`
-      )
-      if (spotlight) {
-        setSpotlightPos({ x: px * 100, y: py * 100 })
+      pendingRef.current = {
+        px: (e.clientX - rect.left) / rect.width,
+        py: (e.clientY - rect.top) / rect.height,
       }
+      if (rafRef.current != null) return
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null
+        const p = pendingRef.current
+        if (!p) return
+        const xRot = (p.py - 0.5) * (tiltLimit * 2) * dir
+        const yRot = (p.px - 0.5) * -(tiltLimit * 2) * dir
+        setTransform(
+          `perspective(${perspective}px) rotateX(${xRot}deg) rotateY(${yRot}deg) scale3d(${scale}, ${scale}, ${scale})`
+        )
+        if (spotlight) setSpotlightPos({ x: p.px * 100, y: p.py * 100 })
+      })
     },
     [tiltLimit, scale, perspective, dir, spotlight]
   )
+
+  // crimson ring + outer glow on hover. ring sits just outside the existing border for a layered silver+crimson edge.
+  const hoverShadow = isHovered
+    ? '0 0 0 1px var(--c-crimson-hot), 0 0 28px rgba(200,16,31,0.32), 0 0 80px rgba(200,16,31,0.12), inset 0 1px 0 rgba(255,255,255,0.06)'
+    : 'none'
 
   return (
     <div
@@ -59,11 +74,12 @@ export function TiltCard({
       }}
       style={{
         transform,
-        transition: 'transform 0.2s ease-out',
+        transition: 'transform 0.2s ease-out, box-shadow 0.35s ease',
         transformStyle: 'preserve-3d',
         willChange: 'transform',
         position: 'relative',
         overflow: 'hidden',
+        boxShadow: hoverShadow,
         ...style,
       }}
     >
@@ -81,7 +97,7 @@ export function TiltCard({
             left: `${spotlightPos.x}%`,
             top: `${spotlightPos.y}%`,
             transform: 'translate(-50%, -50%)',
-            background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 40%)',
+            background: 'radial-gradient(circle, rgba(200,16,31,0.22) 0%, rgba(200,200,200,0.08) 25%, transparent 50%)',
           }} />
         </div>
       )}

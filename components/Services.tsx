@@ -15,11 +15,11 @@ export default function Services() {
   const { lang } = useLang()
 
   return (
-    <section id="services" style={{ padding: '6rem 2.5rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+    <section id="services" style={{ padding: '6rem 2.5rem', borderTop: '1px solid var(--line)' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <motion.p
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
-          style={{ fontFamily: "var(--font-body), sans-serif", fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '3rem', textAlign: 'center' }}>
+          style={{ fontFamily: "var(--font-ui), sans-serif", fontSize: '12px', fontWeight: 500, letterSpacing: '0.5em', textTransform: 'uppercase', color: 'var(--ink-faint)', marginBottom: '3rem', textAlign: 'center', paddingLeft: '0.5em' }}>
           {t.services.eyebrow[lang]}
         </motion.p>
 
@@ -38,8 +38,13 @@ export default function Services() {
               scale={1.02}
               effect="gravitate"
               style={{
-                background: '#141414',
-                border: '1px solid rgba(255,255,255,0.06)',
+                backgroundImage:
+                  'linear-gradient(180deg, rgba(18,10,13,0.86), rgba(8,5,10,0.92) 70%, rgba(8,5,10,0.96)), ' +
+                  'url(/images/product-cards-background.jpg)',
+                backgroundSize: 'cover, cover',
+                backgroundPosition: 'center, center',
+                backgroundRepeat: 'no-repeat, no-repeat',
+                border: '1px solid var(--line-strong)',
                 borderRadius: '16px',
                 padding: '1.8rem',
                 display: 'flex',
@@ -51,36 +56,37 @@ export default function Services() {
               {card.badge && (
                 <span style={{
                   position: 'absolute', top: '1rem', right: '1rem',
-                  fontFamily: "var(--font-body), sans-serif", fontSize: '0.6rem', fontWeight: 700,
-                  letterSpacing: '0.08em', textTransform: 'uppercase',
-                  color: '#000', background: 'linear-gradient(135deg, #d0d0d0 0%, #f5f5f5 40%, #c8c8c8 100%)',
-                  padding: '0.25rem 0.6rem', borderRadius: '999px',
+                  fontFamily: "var(--font-ui), sans-serif", fontSize: '0.6rem', fontWeight: 700,
+                  letterSpacing: '0.16em', textTransform: 'uppercase',
+                  color: '#0a0a0b', background: 'linear-gradient(180deg, #ffffff 0%, #e8e8e8 55%, #b8b8b8 100%)',
+                  padding: '0.28rem 0.65rem', borderRadius: '999px',
+                  border: '1px solid rgba(255,255,255,0.6)',
                 }}>
                   {t.services[card.badge][lang]}
                 </span>
               )}
 
               {/* Number */}
-              <span style={{ fontFamily: "var(--font-body), sans-serif", fontSize: '0.68rem', fontWeight: 600, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em', marginBottom: '1rem' }}>
+              <span style={{ fontFamily: "var(--font-ui), sans-serif", fontSize: '0.68rem', fontWeight: 600, color: 'var(--ink-faint)', letterSpacing: '0.16em', marginBottom: '1rem' }}>
                 {card.num}
               </span>
 
               {/* Title */}
-              <h3 style={{ fontFamily: "var(--font-heading), sans-serif", fontSize: '1.6rem', letterSpacing: '0.02em', color: '#fff', marginBottom: '0.8rem', minHeight: '3.5rem' }}>
+              <h3 style={{ fontFamily: "var(--font-ui), sans-serif", fontSize: '1.55rem', fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--ink)', marginBottom: '0.8rem', minHeight: '3.5rem', lineHeight: 1.1 }}>
                 {t.services[card.titleKey][lang]}
               </h3>
 
               {/* Description */}
-              <p style={{ fontFamily: "var(--font-body), sans-serif", fontSize: '0.78rem', fontWeight: 300, color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, marginBottom: '1.5rem', minHeight: '7rem' }}>
+              <p style={{ fontFamily: "var(--font-ui), sans-serif", fontSize: '0.82rem', fontWeight: 400, color: 'var(--ink-mute)', lineHeight: 1.65, marginBottom: '1.5rem', minHeight: '7rem' }}>
                 {t.services[card.descKey][lang]}
               </p>
 
               {/* Bullets */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.5rem' }}>
                 {card.bullets.map(bKey => (
-                  <div key={bKey} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    <span style={{ fontFamily: "var(--font-body), sans-serif", fontSize: '0.75rem', fontWeight: 400, color: 'rgba(255,255,255,0.5)' }}>
+                  <div key={bKey} style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--crimson)" strokeWidth="2.2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span style={{ fontFamily: "var(--font-ui), sans-serif", fontSize: '0.78rem', fontWeight: 400, color: 'var(--ink-mute)' }}>
                       {t.services[bKey][lang]}
                     </span>
                   </div>
@@ -88,22 +94,22 @@ export default function Services() {
               </div>
 
               {/* Divider */}
-              <div style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.06)', marginBottom: '1.2rem', marginTop: 'auto' }} />
+              <div style={{ width: '100%', height: '1px', background: 'var(--line)', marginBottom: '1.2rem', marginTop: 'auto' }} />
 
               {/* Price + CTA row */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontFamily: "var(--font-body), sans-serif", fontSize: '0.72rem', fontWeight: 600, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                <span style={{ fontFamily: "var(--font-ui), sans-serif", fontSize: '0.72rem', fontWeight: 600, color: 'var(--ink-faint)', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
                   {t.services.pricing[lang]}
                 </span>
                 <a href="/contact" style={{
-                  fontFamily: "var(--font-body), sans-serif", fontSize: '0.68rem', fontWeight: 600,
-                  letterSpacing: '0.06em', textTransform: 'uppercase',
-                  color: '#fff', textDecoration: 'none',
-                  display: 'flex', alignItems: 'center', gap: '0.3rem',
-                  transition: 'opacity 0.2s',
+                  fontFamily: "var(--font-ui), sans-serif", fontSize: '0.7rem', fontWeight: 600,
+                  letterSpacing: '0.16em', textTransform: 'uppercase',
+                  color: 'var(--ink)', textDecoration: 'none',
+                  display: 'flex', alignItems: 'center', gap: '0.35rem',
+                  transition: 'color 0.2s',
                 }}
-                  onMouseEnter={e => e.currentTarget.style.opacity = '0.7'}
-                  onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+                  onMouseEnter={e => e.currentTarget.style.color = 'var(--crimson)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'var(--ink)'}
                 >
                   {t.services.getStarted[lang]}
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
