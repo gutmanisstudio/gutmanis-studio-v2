@@ -148,19 +148,41 @@ export default function Footer() {
       <div style={{
         overflow: 'hidden', textAlign: 'center', marginTop: '-2rem',
         userSelect: 'none', pointerEvents: 'none',
+        width: '100%', maxWidth: '100vw',
       }}>
         <span style={{
           fontFamily: "var(--font-ui), sans-serif",
-          fontSize: 'clamp(8rem, 20vw, 18rem)',
+          fontSize: 'clamp(3.5rem, 20vw, 18rem)',
           fontWeight: 800,
           color: 'rgba(255,255,255,0.04)',
           letterSpacing: '-0.02em',
           lineHeight: 0.85,
           display: 'block',
+          whiteSpace: 'nowrap',
         }}>
           GUTMANIS <span style={{ color: 'oklch(0.58 0.22 25 / 0.10)' }}>STUDIO</span>
         </span>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .footer-cols {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+            margin-top: 2.5rem !important;
+            padding-bottom: 2rem !important;
+          }
+          .footer-bottom {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 1.25rem !important;
+          }
+          .footer-bottom > div:first-child {
+            flex-wrap: wrap !important;
+            gap: 1rem 1.25rem !important;
+          }
+        }
+      `}</style>
     </footer>
   )
 }

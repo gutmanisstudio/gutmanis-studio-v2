@@ -45,6 +45,7 @@ export default function Hero() {
         aria-hidden
         fetchPriority="high"
         decoding="async"
+        className="hero-statue-img"
         style={{
           position: 'absolute', inset: 0, width: '100%', height: '100%',
           objectFit: 'cover', objectPosition: '85% center',
@@ -65,7 +66,7 @@ export default function Hero() {
       <HeroParticles />
 
       {/* darken / vignette for legibility */}
-      <div aria-hidden style={{
+      <div aria-hidden className="hero-vignette" style={{
         position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
         background: [
           'linear-gradient(90deg, rgba(8,5,8,0.88) 0%, rgba(8,5,8,0.55) 45%, rgba(8,5,8,0.15) 75%, rgba(8,5,8,0.35) 100%)',
@@ -170,6 +171,24 @@ export default function Hero() {
       <style>{`
         @media (max-width: 768px) {
           .hero-review-card { display: none !important; }
+          /* On mobile the masked + scaled-down monument was barely visible.
+             Fill the frame, anchor it behind the text, and let the vignette
+             handle legibility. */
+          .hero-statue-img {
+            transform: none !important;
+            object-position: 70% center !important;
+            -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%) !important;
+            mask-image: linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%) !important;
+            -webkit-mask-composite: source-over !important;
+            mask-composite: add !important;
+            opacity: 0.55 !important;
+          }
+          /* Stronger darken so the text reads cleanly over the statue */
+          .hero-vignette {
+            background:
+              linear-gradient(180deg, rgba(8,5,8,0.55) 0%, rgba(8,5,8,0.35) 35%, rgba(8,5,8,0.55) 70%, rgba(8,5,8,0.85) 100%),
+              radial-gradient(ellipse 80% 50% at 50% 100%, rgba(200,16,31,0.12) 0%, transparent 60%) !important;
+          }
         }
       `}</style>
     </section>
