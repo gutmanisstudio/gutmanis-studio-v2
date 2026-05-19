@@ -10,8 +10,8 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
-      <Services />
       <AboutSnippet />
+      <Services />
       <FAQ />
       <Footer />
     </>
